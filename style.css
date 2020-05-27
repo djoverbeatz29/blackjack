@@ -1,0 +1,36 @@
+input {
+    font-size: 2rem;
+}
+
+.split {
+    height: 100%;
+    width: 33%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.left {
+    left: 0;
+    background-color: white;
+}
+
+.right {
+    right: 0;
+    background-color: white;
+}
+
+#split-btn {
+    display: none;
+}
+
+img {
+    max-height: 200px;
+    max-width: 100px;
+}
+
+.card-container-dub {
+    display: none;
+}
