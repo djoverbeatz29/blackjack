@@ -34,3 +34,11 @@ img {
 .card-container-dub {
     display: none;
 }
+
+#game-center {
+    display: none;
+}
+
+header {
+    display: block;
+}

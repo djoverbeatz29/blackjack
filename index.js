@@ -1,32 +1,33 @@
 class Card {
-  constructor(suit, value) {
+  constructor(suit, rank) {
     this.suit = suit;
-    this.value = value;
+    this.rank = rank;
+    this.value = this.setValue(rank)
+  }
+
+  setValue(rank) {
+    if (['10', 'J', 'Q', 'K'].includes(rank)) {
+        return 10
+    }
+    else if (rank === 'A') {
+        return 11
+    }
+    else {
+        return parseInt(rank)
+    }
   }
 }
 
-const suits = ["Hearts", "Spades", "Clubs", "Diamonds"]
-const values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "J", "Q", "A"]
+const SUITS = ["Hearts", "Spades", "Clubs", "Diamonds"]
+const RANKS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "J", "Q", "A"]
 
-function cardCount(card) {
-  if (['10', 'J', 'Q', 'K'].includes(card.value)) {
-      return 10
-  }
-  else if (card.value === 'A') {
-      return 11
-  }
-  else {
-      return parseInt(card.value)
-  }
-}
-
-function generateDeck(){
+function generateDeck(n = 1){
   const deck = []
-  for (let suit of suits){
-    for (let value of values){
-      const card = new Card(suit, value)
-      card.score = cardCount(card)
-      deck.push(card)
+  for (let i = 0; i < n; i++) {
+    for (const suit of SUITS){
+      for (const rank of RANKS){
+        deck.push(new Card(suit, rank))
+      }
     }
   }
   return deck
@@ -36,15 +37,15 @@ function calculateTotal(hand) {
   let total = 0
   const elevens = []
   for (let i = 0; i < hand.length; i++) {
-    total += hand[i].score
-    if (hand[i].score === 11) {
+    total += hand[i].value
+    if (hand[i].value === 11) {
       elevens.push(i)
     }
   }
   if (total > 21) {
     const elevenToOneCount = Math.ceil((total - 21) / 10)
     for (const index of elevens.slice(0, elevenToOneCount)) {
-      hand[index].score = 1
+      hand[index].value = 1
       total -= 10
     }
   }
@@ -52,10 +53,11 @@ function calculateTotal(hand) {
 };
 
 function renderCard(card = null) {
-  return `<img src='./lib/assets/images/${card ? `${card.value}${card.suit[0]}.png` : 'Back.jpg'}'>`
+  return `<img src='./card-images/${card ? `${card.rank}${card.suit[0]}.png` : 'Back.jpg'}'>`
 }
 
 function playGame() {
+  // document.getElementById("sound").play()
 
   const houseHand = [];
   const userHand = [];
@@ -156,6 +158,14 @@ function playGame() {
 
   userPlay()
 }
+
+document.addEventListener("click", (e) => {
+  if (e.target.id === 'estarte') {
+    document.getElementById('game-center').style.display = 'block';
+    document.querySelector('header').style.display = 'none';
+    document.getElementById('sound').play()
+  }
+})
 
 document.addEventListener("DOMContentLoaded", () => {
   playGame()
