@@ -12,11 +12,18 @@
 </head>
 <body>
     <header>
-        <h1>Are you ready to play?</h1>
-        <button id='estarte' type='button'>Yes!</button>
+        <form id='login-form'>
+            <h1>Login Page</h1>
+            <p></p>
+            <label for='username'>Username</label>
+            <input type='text' name='username'>
+            <label for='password'>Password</label>
+            <input type='text' name='password'>
+            <input type='submit' value='Login or Create Account'>
+        </form>
     </header>
     <div id='game-center'>
-        <h1>Welcome to Blackjack</h1>
+        <h1>Welcome to Blackjack!</h1>
         <div class='player-info' name='house'>
             <h2>House Score: 0</h2>
             <div class="card-container" player="house"></div>

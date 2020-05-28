@@ -159,14 +159,21 @@ function playGame() {
   userPlay()
 }
 
-document.addEventListener("click", (e) => {
-  if (e.target.id === 'estarte') {
-    document.getElementById('game-center').style.display = 'block';
-    document.querySelector('header').style.display = 'none';
-    document.getElementById('sound').play()
-  }
-})
-
 document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('login-form')
+  const gameCenter = document.getElementById('game-center')
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault()
+    if (e.target.querySelector("input[name='password']").value === 'password') {
+      form.style.display = 'none'
+      gameCenter.style.display = 'block'
+      document.getElementById('sound').play()
+    }
+    else {
+      form.querySelector('p').innerHTML = "Invalid entry. Try again!"
+    }
+  })
+
   playGame()
 })
