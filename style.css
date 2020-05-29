@@ -1,29 +1,22 @@
+/* header {
+    display: block;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+} */
+
+#login-form {
+    display: 'block'
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
 input {
     font-size: 2rem;
 }
 
-.split {
-    height: 100%;
-    width: 33%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-.left {
-    left: 0;
-    background-color: white;
-}
-
-.right {
-    right: 0;
-    background-color: white;
-}
-
-#split-btn {
-    display: none;
+button {
+    font-size: 12px;
 }
 
 img {
@@ -31,14 +24,11 @@ img {
     max-width: 100px;
 }
 
-.card-container-dub {
-    display: none;
+#cards-pic, #chips-pic {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
-
-#game-center, #player-turn-buttons, #double-btn, #new-game {
+#game-center, #player-turn-buttons, #double-btn, #split-btn, #new-game {
     display: none;
-}
-
-header {
-    display: block;
 }
