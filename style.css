@@ -35,7 +35,7 @@ img {
     display: none;
 }
 
-#game-center {
+#game-center, #player-turn-buttons, #double-btn, #new-game {
     display: none;
 }
 

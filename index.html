@@ -16,9 +16,9 @@
             <h1>Login Page</h1>
             <p></p>
             <label for='username'>Username</label>
-            <input type='text' name='username'>
+            <input type='text' name='username'><br>
             <label for='password'>Password</label>
-            <input type='text' name='password'>
+            <input type='text' name='password'><br>
             <input type='submit' value='Login or Create Account'>
         </form>
     </header>
@@ -31,18 +31,26 @@
 
         <div class='player-info' name='user'>
             <h2>Your Score: 0</h2>
+            <h2>Balance: </h2>
+            <h2>Bet: </h2>
             <div class="card-container" player="user"></div>
             <div class="card-container-dub" player="user">
                 <h2>Your Score: 0</h2>
             </div>
         </div>
         <h2 id='dialog'></h2>
-        <label for='bet-brn'>Place Your Bet: </label><br>
-        <input type='number' id='bet-btn' min=50 max=1000><br>
+        <form id='bet-form'>
+            <h2>Bet: $0</h2>
+            <div id = 'chip-list'></div>
+            <input type='submit'>
+            <button type='button' name='reset'>Reset</button>
+        </form>
         <button type="button" id="split-btn">Split</button>
         <button type="button" id="double-btn">Double</button>
-        <button type="button" id="hit-btn">Hit</button>
-        <button type="button" id="stay-btn">Stay</button>
+        <div id='player-turn-buttons'>
+            <button type="button" id="hit-btn">Hit</button>
+            <button type="button" id="stay-btn">Stay</button>
+        </div>
         <button type="button" id="new-game">New Game</button>
     </div>
 </body>

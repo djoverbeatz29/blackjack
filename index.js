@@ -57,14 +57,17 @@ function renderCard(card = null) {
 }
 
 function playGame() {
-  // document.getElementById("sound").play()
-
+  let playerBet = 0
   const houseHand = [];
   const userHand = [];
   const deck = generateDeck();
-  const split = document.getElementById('split-btn')
-
+  const splitButton = document.getElementById('split-btn')
+  const doubleButton = document.getElementById('double-btn')
+  const betForm = document.getElementById('bet-form')
+  const newGame = document.getElementById('new-game')
   const dialog = document.getElementById('dialog')
+  const dube = document.querySelector('.card-container-dub')
+
   dialog.innerHTML = null
   for (const cont of document.getElementsByClassName('card-container')) {
     cont.innerHTML = null
@@ -101,22 +104,66 @@ function playGame() {
     return card
   }
 
+  function renderChip(i) {
+    return `<img name='chip' chip-id='${i}' src='./chip-images/chip-${i}.jpg'>`
+  }
+
+  function generateChipList() {
+    const chipList = document.getElementById('chip-list')
+    for (const num of [5, 10, 25, 50]) {
+      chipList.innerHTML += renderChip(num)
+    }
+  }
+
+  function prelim() {
+    generateChipList()
+    document.addEventListener('click', (e) => {
+      if (e.target.name === 'chip') {
+        const amount = parseInt(e.target.getAttribute('chip-id'))
+        console.log(amount)
+        playerBet += amount
+        betForm.querySelector('h2').innerHTML = `Bet: $${playerBet}`
+      }
+      else if (e.target.name === 'reset') {
+        playerBet = 0
+        betForm.querySelector('h2').innerHTML = "Bet: $0"
+      }
+    })
+    betForm.addEventListener("submit", (e) => {
+      e.preventDefault()
+      betForm.style.display = 'none'
+      initialDraw()
+    })
+  }
+
+  function initialDraw() {
+    for (let i = 0; i < 2; i++) {
+      setTimeout(() => {drawCard(false)}, 1000)
+      setTimeout(() => {drawCard()}, 1000)
+    }
+    if (userHand.length === 2 && userHand[0].rank === userHand[1].rank) {
+      splitButton.style.display = 'block'
+    }
+    dube.addEventListener("click", () => {
+      dube.value = 'true'
+      playerBet *= 2
+      dialog.innerHTML = `Bet: $${playerBet}`
+    })
+  }
+
   function userPlay() {
+    drawCard()
     document.addEventListener("click", e => {
       if (e.target.id === 'hit-btn') {
-        console.log(calculateTotal(userHand))
         drawCard()
-        console.log(calculateTotal(userHand))
         if (calculateTotal(userHand) > 21) {
           dialog.innerHTML = "You busted. "
-          setTimeout(dealerPlay, 1000)
         }
       }
       else if (e.target.id === 'stay-btn') {
-        setTimeout(dealerPlay, 1000)
       }
-      displayWinner()
     })
+    dealerPlay()
   }
 
   function dealerPlay() {
@@ -132,7 +179,7 @@ function playGame() {
     if (calculateTotal(houseHand) > 21) {
       dialog.innerHTML = "The dealer busted. "
     }
-    return
+    displayWinner()
   }
 
   function displayWinner() {
@@ -148,15 +195,11 @@ function playGame() {
     else {
       dialog.innerHTML += "You lost!"
     }
+    newGame.style.display = 'block'
   }
 
-  [0, 1].forEach(card => drawCard(false));
-  [0, 1].forEach(card => drawCard(true));
-  if (userHand[0].value === userHand[1].value) {
-    split.style.display = "block"
-  }
-
-  userPlay()
+  prelim()
+  // userPlay()
 }
 
 document.addEventListener("DOMContentLoaded", () => {
