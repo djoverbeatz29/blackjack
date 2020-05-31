@@ -27,6 +27,6 @@ img {
     max-width: 100px;
 }
 
-#game-center, #player-turn-buttons, #double-btn, #split-btn, #new-game, #winner {
+#game-center, #winner, #new-game, #split, #double, .card-holder-dub {
     display: none;
 }
