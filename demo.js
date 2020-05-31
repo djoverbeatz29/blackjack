@@ -103,7 +103,7 @@ class Deck {
 
 }
 
-const deque = new Deck
+const deque = new Deck(10)
 for (const i of [0, 1]) {
     new Player
 }
@@ -133,42 +133,76 @@ function loginToGame() {
     })
   }
 
+function roundOne() {
+    for (const i of [0, 1]) {
+        deque.dealCard(i); deque.dealCard(i)
+        const player = PLAYERS[i]
+        const playerCH = getPlayerCardholder(i)
+        if (i && (player.hand[0].rank !== player.hand[1].rank)) {
+            const split = document.getElementById('split')
+            split.style.display = 'block'
+            split.addEventListener("click", () => {
+                const [cH1, cH2] = [playerCH.querySelector('.card-holder'), playerCH.querySelector('.card-holder-dub')]
+                cH1.innerHTML = getCardImage(player.hand[0])
+                cH2.style.display = 'block'
+                cH2.innerHTML = getCardImage(player.hand[1])
+                return
+            })
+        }
+    }
+}   
+
 function playerTurn(id=1) {
     const dialog = document.getElementById('dialog')
     const player = PLAYERS[id]
-
-    document.addEventListener('click', (e) => {
-        if (e.target.id === 'hit') {
-            deque.dealCard(id)
-            if (player.score() === 21) {
-                dialog.innerHTML = 'Congrats, you hit 21!'
+    if (player.score() === 21) {
+        dialog.innerHTML = `O mai gawdgy! Getedgy the bleckyjecky!!`
+        document.querySelector('.play-buttons').style.display = 'none'
+        document.getElementById('winner').style.display = 'block'
+    }
+    else {
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'hit') {
+                deque.dealCard(id)
+                if (player.score() < 21) {
+                    dialog.innerHTML = "It's still your turn. Hit or stay?"
+                }
+                else {
+                    if (player.score() === 21) {
+                        dialog.innerHTML = 'Congrats, you hit 21!'
+                    }
+                    else if(player.score() > 21) {
+                        dialog.innerHTML = "Dang, you busted!"
+                    }
+                    document.querySelector('.play-buttons').style.display = 'none'
+                    document.getElementById('winner').style.display = 'block'
+                }
             }
-            else if(player.score() > 21) {
-                dialog.innerHTML = 'Bitch, u mufukkin busted mufukka!'
+            else if (e.target.id === 'stay') {
+                dialog.innerHTML = `You held at ${player.score()}.`
+                document.querySelector('.play-buttons').style.display = 'none'
+                document.getElementById('winner').style.display = 'block'                
             }
-            else {
-                dialog.innerHTML = 'Still yo turn ho. Watchu gon du?'
-            }
-        }
-        else if (e.target.id === 'stay') {
-            dialog.innerHTML = `You held at ${player.score()}.`
-            document.querySelector('.play-buttons').style.display = 'none'
-            document.getElementById('winner').style.display = 'block'
-        }
-    })
+        })
+    }
 }
 
 function dealerTurn() {
     const dialog = document.getElementById('dialog')
     const player = PLAYERS[0]
-    while (player.score() < 17) {
-        deque.dealCard(0)
-    }
-    if (player.score() > 21) {
-        dialog.innerHTML = 'Dat nigga dealer dun busted!'
+    if (player.score() === 21) {
+        dialog.innerHTML = "The diler getedgy the bleckyjecky! Is so sedgy!"
     }
     else {
-        dialog.innerHTML = `Dealer's score be ${player.score()}.`
+        while (player.score() < 17) {
+            deque.dealCard(0)
+        }
+        if (player.score() > 21) {
+            dialog.innerHTML = 'The dealer busted!'
+        }
+        else {
+            dialog.innerHTML = `Dealer's score is ${player.score()}.`
+        }
     }
 }
 
@@ -180,15 +214,15 @@ document.addEventListener('click', (e) => {
         let rez
         const [dealerScore, userScore] = [PLAYERS[0].score(), PLAYERS[1].score()]
         if (userScore > 21 || dealerScore <= 21 && dealerScore > userScore) {
-            dialog.innerHTML = 'Dealer beat you, bitch.'
+            dialog.innerHTML = 'Sorry, you lost.'
             rez = 'L'
         }
         else if (userScore === dealerScore) {
-            dialog.innerHTML = "Y'all mufuckas dun tied!"
+            dialog.innerHTML = "'Tis a push!"
             rez = 'T'
         }
         else {
-            dialog.innerHTML = 'Dam cunt, sumhow, u dun won!!'
+            dialog.innerHTML = 'Wow, you won!'
             rez = 'W'
         }
         rezObj['result'] = rez
@@ -201,14 +235,9 @@ document.addEventListener('click', (e) => {
     }
 })
 
-function playGame() {
+async function playGame() {
     loginToGame()
-
-    for (const i of [0, 1]) {
-        deque.dealCard(i)
-        deque.dealCard(i)
-    }
-
+    roundOne()
     playerTurn()
     dealerTurn()
 }
