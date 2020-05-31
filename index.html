@@ -11,39 +11,38 @@
   </audio>
 </head>
 <body>
+    
     <header>
-        <form id='login-form'>
-            <h1>Login Page</h1>
-            <div id='bj-pics'>
-                <img id='cards-pic' src='./other-images/cards.jpg'>
-                <img id='chips-pic' src='./other-images/chips.jpg'>
-            </div>
-            <p></p>
-            <label for='username'>Username</label>
-            <input type='text' name='username'><br>
-            <label for='password'>Password</label>
-            <input type='password' name='password'><br>
-            <input type='submit' value='Login or Create Account'>
-        </form>
     </header>
+   
+    <form id='login-form'>
+        <h1>Blackjack Login Page</h1>
+        <div id='bj-pics'>
+            <img id='cards-pic' src='./other-images/cards.jpg'>
+            <img id='chips-pic' src='./other-images/chips.jpg'>
+        </div>
+        <p></p>
+        <label for='username'>Username</label>
+        <input type='text' name='username'><br>
+        <label for='password'>Password</label>
+        <input type='password' name='password'><br>
+        <input type='submit' value='Login or Create Account'>
+    </form>
+
     <div id='game-center'>
         <h1>Welcome to Blackjack!</h1>
-        <div class='player-info' name='house'>
-            <h2>House Score: 0</h2>
-            <div class="card-container" player="house"></div>
-        </div>
 
-        <div class='player-info' name='user'>
-            <h2>Your Score: 0</h2>
-            <h2>Balance: $1,000</h2>
-            <h2></h2>
-            <div class="card-container" player="user"></div>
-        </div>
-        <h2 id='dialog'></h2>
+        <div class='house-holder'></div>
+        <div class='player-holder'></div>
+
         <form id='bet-form'>
-            <h2>Bet: $0</h2>
-            <div id='chip-list'></div>
-            <input type='submit'>
+            <div id="chip-list">
+                <img name="chip" chip-id="5" src="./chip-images/chip-5.jpg">
+                <img name="chip" chip-id="10" src="./chip-images/chip-10.jpg">
+                <img name="chip" chip-id="25" src="./chip-images/chip-25.jpg">
+                <img name="chip" chip-id="50" src="./chip-images/chip-50.jpg">
+            </div>
+            <input type='submit' value="Place Bet">
             <button type='button' name='reset'>Reset</button>
         </form>
         <!-- <button type="button" id="split-btn">Split</button> -->
@@ -51,6 +50,7 @@
         <div id='player-turn-buttons'>
             <button type="button" id="hit-btn">Hit</button>
             <button type="button" id="stay-btn">Stay</button>
+            <p id='dialog'></p>
         </div>
         <button type="button" id="new-game">New Game</button>
     </div>
